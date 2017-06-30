@@ -22,6 +22,10 @@ Getting started
 
 This code has been tested on OSX 10.11.5 and Ubuntu 14.04. Code is written using Bash and Javascript - you will need to install nodejs:
 
+sudo apt-get install python-software-properties
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install nodejs
+
 https://nodejs.org
 
 We use the testrpc npm module in order to reproduce the exact conditions the workflow scripts need to run the tests. It is important that you reset the blockchain every time you run through these steps. In order to reset, just restart the start-ethereum-node.sh script.
