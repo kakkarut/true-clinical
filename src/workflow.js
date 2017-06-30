@@ -232,8 +232,8 @@ function readFromRegulator() {
 function readFromTrial() {
    var trial = trialContract.at(trialContractAddress);
 
-   trial.drugName(function(error, _drugName){
-      console.log("product name= "+hex2string(_drugName));
+   trial.productName(function(error, _productName){
+      console.log("product name= "+hex2string(_productName));
    })
 
    trial.ipfsHash(function(err, _ipfsHash) {
