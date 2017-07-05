@@ -45,7 +45,7 @@ npm install -g ethereumjs-testrpc
 
 4) In another terminal, run the script that will execute the workflow steps
 
-./run-workflow.sh
+./run-workflow.sh > logs/run-workflow.log
 
 This script will:
 
@@ -57,6 +57,4 @@ This script will:
 	-Add 5 data points for each subject
 
 5) Run the script to read data from the blockchain contracts
-./read-from-blockchain.sh
-
-6) Log files for these scripts can be found in the logs directory
+./read-from-blockchain.sh > logs/read-from-blockchain.log
