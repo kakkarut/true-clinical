@@ -1,14 +1,9 @@
 Improving Data Transparency in Clinical Trials Using Blockchain Smart Contracts
 ===============================================================================
 
-Paper
-=====
+14th May 2017
 
-https://f1000research.com/articles/5-2541/v1
-
-4th October 2016 
-
-Authors: Timothy Nugent, David Upton and Mihai Cimpoesu
+Authors: Anurag Kumar
 
 Package contents
 ================
@@ -25,9 +20,11 @@ logs/read-from-blockchain.log - output from running src/read-from-blockchain.sh
 Getting started
 ===============
 
-This code has been tested on OSX 10.11.5 and Ubuntu 14.04. Code is written using Bash and Javascript - you will need to install nodejs:
+This code has been tested on OSX 10.12 and Ubuntu 14.04. Code is written using Bash and Javascript - you will need to install nodejs:
 
 https://nodejs.org
+
+sudo apt-get install python-software-properties && curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && sudo apt-get install nodejs
 
 We use the testrpc npm module in order to reproduce the exact conditions the workflow scripts need to run the tests. It is important that you reset the blockchain every time you run through these steps. In order to reset, just restart the start-ethereum-node.sh script.
 
@@ -48,7 +45,7 @@ npm install -g ethereumjs-testrpc
 
 4) In another terminal, run the script that will execute the workflow steps
 
-./run-workflow.sh
+./run-workflow.sh > logs/run-workflow.log
 
 This script will:
 
@@ -60,33 +57,4 @@ This script will:
 	-Add 5 data points for each subject
 
 5) Run the script to read data from the blockchain contracts
-./read-from-blockchain.sh
-
-...............................
-blockNumber= 3005
-drug name= Tamiflu
-ipfs hash= QmTZKpCqqFcUsmXWzffmLkYNCwrYkTvhkAXdquzNWij1z4
-number of subjects= 501
-patient ident= s0/1985-04-03
-patient ident= s1/2006-4-1
-	 data=  44/mg/89/NONE added at 2016-10-04T16:14:49+01:00
-	 data=  50/mg/68/NAUSEA added at 2016-10-04T16:14:49+01:00
-	 data=  27/mg/44/HEARTBURN added at 2016-10-04T16:14:49+01:00
-	 data=  42/mg/33/COMA added at 2016-10-04T16:14:49+01:00
-	 data=  96/mg/54/HEADACHE added at 2016-10-04T16:14:49+01:00
-patient ident= s2/2007-5-13
-	 data=  10/mg/29/COMA added at 2016-10-04T16:14:49+01:00
-	 data=  79/mg/44/NAUSEA added at 2016-10-04T16:14:49+01:00
-	 data=  53/mg/21/HEADACHE added at 2016-10-04T16:14:49+01:00
-...............................
-
-6) Log files for these scripts can be found in the logs directory
-
-Problems
-========
-
-Please contact us:
-
-Mihai Cimpoesu mihai.cimpoesu@gmail.com
-Timothy Nugent tim.nugent@thomsonreuters.com
-David Upton dupton0@gmail.com
+./read-from-blockchain.sh > logs/read-from-blockchain.log
