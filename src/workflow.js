@@ -233,7 +233,7 @@ function readFromTrial() {
    var trial = trialContract.at(trialContractAddress);
 
    trial.drugName(function(error, _drugName){
-      console.log("drug name= "+hex2string(_drugName));
+      console.log("product name= "+hex2string(_drugName));
    })
 
    trial.ipfsHash(function(err, _ipfsHash) {
