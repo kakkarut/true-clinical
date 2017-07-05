@@ -9,9 +9,9 @@ contract Regulator {
    int constant STATUS_ACCEPTED  = 1;
    int constant STATUS_REJECTED  = 2;
 
-   event ProposalSubmitted(address _submitter, bytes32 _drugName, uint _id);
-   event ProposalAccepted (address _submitter, bytes32 _drugName, uint _id, address _clinicalTrial);
-   event ProposalRejected (address _submitter, bytes32 _drugName, uint _id);
+   event ProposalSubmitted(address _submitter, bytes32 _productName, uint _id);
+   event ProposalAccepted (address _submitter, bytes32 _productName, uint _id, address _clinicalTrial);
+   event ProposalRejected (address _submitter, bytes32 _productName, uint _id);
 
    struct CroIdentity {
       bytes32  name;
@@ -22,7 +22,7 @@ contract Regulator {
 
    struct TrialProposal {
       address croAddr;
-      bytes32  drugName;
+      bytes32  productName;
       uint32  startDate;
       uint32  endDate;
       bytes  ipfsHash;
@@ -54,11 +54,11 @@ contract Regulator {
       owner = msg.sender;
    }
 
-   function submitProposal(bytes32 _drugName, uint32 _startDate, uint32 _endDate) {
+   function submitProposal(bytes32 _productName, uint32 _startDate, uint32 _endDate) {
 
       TrialProposal memory proposal;
       proposal.croAddr   = msg.sender;
-      proposal.drugName  = _drugName;
+      proposal.productName  = _productName;
       proposal.startDate = _startDate;
       proposal.endDate   = _endDate;
       proposal.status    = STATUS_SUBMITTED;
@@ -70,13 +70,13 @@ contract Regulator {
       _counter = proposals.length;
    }
 
-   function getProposalById(uint32 _id) constant returns(address _croAddr, bytes32 _drugName, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _trial) {
+   function getProposalById(uint32 _id) constant returns(address _croAddr, bytes32 _productName, uint32 _startDate, uint32 _endDate, bytes _ipfsHash, int _status, address _trial) {
       if(_id >= proposals.length) {
          return;
       }
       TrialProposal memory tp = proposals[_id];
       _croAddr = tp.croAddr;
-      _drugName = tp.drugName;
+      _productName = tp.productName;
       _startDate = tp.startDate;
       _endDate = tp.endDate;
       _ipfsHash = tp.ipfsHash;
@@ -96,12 +96,12 @@ contract Regulator {
       }
 
       // deploy the actual clinical trial contract and return it
-      ClinicalTrial trial = new ClinicalTrial(owner, tp.croAddr, _id, tp.startDate, tp.endDate, tp.drugName, tp.ipfsHash);
+      ClinicalTrial trial = new ClinicalTrial(owner, tp.croAddr, _id, tp.startDate, tp.endDate, tp.productName, tp.ipfsHash);
 
       proposals[_id].trial = trial;
       proposals[_id].status = STATUS_ACCEPTED;
 
-      ProposalAccepted (tp.croAddr, tp.drugName, _id, trial);
+      ProposalAccepted (tp.croAddr, tp.productName, _id, trial);
    }
 
    function rejectProposal(uint _id) {
@@ -113,7 +113,7 @@ contract Regulator {
       proposals[_id].status = STATUS_REJECTED;
 
       TrialProposal memory tp = proposals[_id];
-      ProposalRejected (tp.croAddr, tp.drugName, _id);
+      ProposalRejected (tp.croAddr, tp.productName, _id);
    }
 
    function submitCro(bytes32 _name, bytes32 _url) {

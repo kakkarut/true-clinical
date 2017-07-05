@@ -67,7 +67,7 @@ function deployRegulator() {
 
 function addCroForApproval() {
    var regulator = regulatorContract.at(regulatorContractAddress);
-   regulator.submitCro.sendTransaction("roche", "http://www.roche.com",
+   regulator.submitCro.sendTransaction("bsci", "http://www.bsci.com",
       {from: croAccount, gas: defaultGas},
       function (error1, txHash) {
          if(error1) {
@@ -111,7 +111,7 @@ function deployClinicalTrial() {
          process.exit(1);
       }
       var trialContract = web3.eth.contract(trialAbi);
-      var trial = trialContract.new(regulatorContractAddress, croAccount, 0, trialStartDate, trialEndDate, "Tamiflu", hash,
+      var trial = trialContract.new(regulatorContractAddress, croAccount, 0, trialStartDate, trialEndDate, "SomeProduct", hash,
          { from: croAccount, data: trialBin, gas: defaultGas }, function (error1, contract1){
          if (error1) {
             console.error("could not mine clinical trial contract");
@@ -209,7 +209,7 @@ function addDataPoints() {
          for (j = 0; j < dataPoints; j++) {
             var data = {};
             data['dose'] = Math.floor((Math.random() * 100) + 1);
-            data['units'] = 'mg';
+            data['units'] = 'SomeUnit';
             data['response'] = Math.floor((Math.random() * 100) + 1);
             data['side-effects'] = sideEffect[getRandomInt(0,5)];
             var _json = data['dose']+'/'+data['units']+'/'+data['response']+'/'+data['side-effects'];
@@ -232,8 +232,8 @@ function readFromRegulator() {
 function readFromTrial() {
    var trial = trialContract.at(trialContractAddress);
 
-   trial.drugName(function(error, _drugName){
-      console.log("drug name= "+hex2string(_drugName));
+   trial.productName(function(error, _productName){
+      console.log("product name= "+hex2string(_productName));
    })
 
    trial.ipfsHash(function(err, _ipfsHash) {

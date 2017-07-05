@@ -13,7 +13,7 @@ contract ClinicalTrial {
    uint public endDate;
    uint public createdDate;
 
-   bytes32 public drugName;
+   bytes32 public productName;
    bytes public ipfsHash;
 
    struct DataPoint {
@@ -45,13 +45,13 @@ contract ClinicalTrial {
       _;
    }
 
-   function ClinicalTrial(address _regulator, address _cro, uint _proposalId, uint _startDate, uint _endDate, bytes32 _drugName, bytes _ipfsHash) {
+   function ClinicalTrial(address _regulator, address _cro, uint _proposalId, uint _startDate, uint _endDate, bytes32 _productName, bytes _ipfsHash) {
       cro = _cro;
       regulator = _regulator;
       proposalId = _proposalId;
       startDate = _startDate;
       endDate = _endDate;
-      drugName = _drugName;
+      productName = _productName;
       ipfsHash = _ipfsHash;
       createdDate = now;
    }
@@ -103,13 +103,13 @@ contract ClinicalTrial {
       _json = data[ident][_dataPointId].json;
    }
 
-   // add modifier dateBeforeStart in the production release
+   // add modifier dateBeforeStart
    function addSubject(bytes32 _subject) croOnly returns (bool _success)  {
       subjects.push(_subject);
       return true;
    }
 
-   // add modifier trialIdOpen in the production release
+   // add modifier trialIdOpen
    function addDataPoint(uint _subjectId, bytes32 _json) croOnly returns (bool _success)  {
       if( _subjectId >= subjects.length ) {
          throw;
